@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "@readme/eslint-config",
+    "@readme/eslint-config/typescript"
+  ],
+  "root": true,
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}
