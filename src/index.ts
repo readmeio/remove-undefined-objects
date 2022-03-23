@@ -8,7 +8,7 @@ function isEmptyObject(obj: unknown) {
 
 // Modified from here: https://stackoverflow.com/a/43781499
 function stripEmptyObjects(obj: any) {
-  let cleanObj = obj;
+  const cleanObj = obj;
 
   if (!isObject(obj) && !Array.isArray(cleanObj)) {
     return cleanObj;
@@ -16,33 +16,47 @@ function stripEmptyObjects(obj: any) {
     return undefined;
   }
 
-  Object.keys(cleanObj).forEach(key => {
-    let value = cleanObj[key];
+  if (!Array.isArray(cleanObj)) {
+    Object.keys(cleanObj).forEach(key => {
+      let value = cleanObj[key];
 
-    if (typeof value === 'object' && !Array.isArray(cleanObj) && value !== null) {
-      // Recurse, strip out empty objects from children
+      if (typeof value === 'object' && value !== null) {
+        value = stripEmptyObjects(value);
+
+        if (isEmptyObject(value)) {
+          delete cleanObj[key];
+        } else {
+          cleanObj[key] = value;
+        }
+      } else if (value === null) {
+        // Null properties in an object should remain!
+      }
+    });
+
+    return cleanObj;
+  }
+
+  cleanObj.forEach((o, idx) => {
+    let value = o;
+    if (typeof value === 'object' && value !== null) {
       value = stripEmptyObjects(value);
 
-      // Then remove all empty objects from the top level object
       if (isEmptyObject(value)) {
-        delete cleanObj[key];
+        delete cleanObj[idx];
       } else {
-        cleanObj[key] = value;
+        cleanObj[idx] = value;
       }
     } else if (value === null) {
-      delete cleanObj[key];
+      // Null entries within an array should be removed.
+      delete cleanObj[idx];
     }
   });
 
-  if (Array.isArray(cleanObj)) {
-    // Since deleting a key from an array will retain an undefined value in that array, we need to
-    // filter them out.
-    cleanObj = cleanObj.filter(function (el) {
-      return el !== undefined;
-    });
-  }
-
-  return cleanObj;
+  // Since deleting a key from an array will retain an undefined value in that array, we need to
+  // filter them out.
+  return cleanObj.filter(function (el) {
+    return el !== undefined;
+  });
 }
 
 export default function removeUndefinedObjects(obj?: unknown) {
