@@ -44,10 +44,13 @@ test('should remove empty arrays from within object', () => {
     },
     d: [1234, undefined],
     e: [],
+    f: null,
+    g: [null, undefined, null],
   };
 
   expect(removeUndefinedObjects(obj)).toStrictEqual({
     d: [1234],
+    f: null,
   });
 });
 
