@@ -1,3 +1,14 @@
+## 2.0.0 (2022-04-26)
+
+* feat: supporting node 18 (#14) ([ee2b7ba](https://github.com/readmeio/remove-undefined-objects/commit/ee2b7ba)), closes [#14](https://github.com/readmeio/remove-undefined-objects/issues/14)
+* build(deps-dev): bump eslint from 8.11.0 to 8.12.0 (#10) ([90531cc](https://github.com/readmeio/remove-undefined-objects/commit/90531cc)), closes [#10](https://github.com/readmeio/remove-undefined-objects/issues/10)
+* build(deps-dev): bump prettier from 2.6.0 to 2.6.1 (#13) ([00f21bd](https://github.com/readmeio/remove-undefined-objects/commit/00f21bd)), closes [#13](https://github.com/readmeio/remove-undefined-objects/issues/13)
+* build(deps-dev): bump ts-jest from 27.1.3 to 27.1.4 (#12) ([861686d](https://github.com/readmeio/remove-undefined-objects/commit/861686d)), closes [#12](https://github.com/readmeio/remove-undefined-objects/issues/12)
+* build(deps-dev): bump typescript from 4.6.2 to 4.6.3 (#11) ([3eb7829](https://github.com/readmeio/remove-undefined-objects/commit/3eb7829)), closes [#11](https://github.com/readmeio/remove-undefined-objects/issues/11)
+* chore(deps): bump actions/checkout from 2.4.0 to 3 (#9) ([5458b7e](https://github.com/readmeio/remove-undefined-objects/commit/5458b7e)), closes [#9](https://github.com/readmeio/remove-undefined-objects/issues/9)
+
+
+
 ## 1.1.0 (2022-03-23)
 
 * chore: fixing our husky commit hook ([63bf82f](https://github.com/readmeio/remove-undefined-objects/commit/63bf82f))
