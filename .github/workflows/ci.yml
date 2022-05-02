@@ -20,14 +20,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install npm@7
-        run: npm install -g npm@7
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Build dist
-        run: npm run build
-
-      - name: Run tests
-        run: npm test
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
