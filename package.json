@@ -24,7 +24,7 @@
     "test": "tsc; jest --coverage"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.3",
+    "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^16.0.0",
     "@readme/eslint-config": "^8.7.2",
     "@types/jest": "^27.4.0",
