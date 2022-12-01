@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "outDir": "./dist",
+    "skipLibCheck": true
   },
   "include": ["./src/**/*"]
 }
