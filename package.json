@@ -1,7 +1,7 @@
 {
   "name": "remove-undefined-objects",
   "description": "Remove undefined properties and empty arrays from an object",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Jon Ursenbach <jon@ursenba.ch>",

@@ -1,3 +1,30 @@
+## <small>2.0.2 (2022-12-01)</small>
+
+* chore(deps-dev): bump @commitlint/cli from 17.0.3 to 17.1.2 (#35) ([3efc7cf](https://github.com/readmeio/remove-undefined-objects/commit/3efc7cf)), closes [#35](https://github.com/readmeio/remove-undefined-objects/issues/35)
+* chore(deps-dev): bump @commitlint/cli from 17.1.2 to 17.2.0 (#45) ([c42ae8f](https://github.com/readmeio/remove-undefined-objects/commit/c42ae8f)), closes [#45](https://github.com/readmeio/remove-undefined-objects/issues/45)
+* chore(deps-dev): bump @commitlint/cli from 17.2.0 to 17.3.0 (#46) ([42647f7](https://github.com/readmeio/remove-undefined-objects/commit/42647f7)), closes [#46](https://github.com/readmeio/remove-undefined-objects/issues/46)
+* chore(deps-dev): bump @commitlint/config-conventional (#36) ([86b762b](https://github.com/readmeio/remove-undefined-objects/commit/86b762b)), closes [#36](https://github.com/readmeio/remove-undefined-objects/issues/36)
+* chore(deps-dev): bump @commitlint/config-conventional (#44) ([eaf0190](https://github.com/readmeio/remove-undefined-objects/commit/eaf0190)), closes [#44](https://github.com/readmeio/remove-undefined-objects/issues/44)
+* chore(deps-dev): bump @commitlint/config-conventional (#52) ([0e673e0](https://github.com/readmeio/remove-undefined-objects/commit/0e673e0)), closes [#52](https://github.com/readmeio/remove-undefined-objects/issues/52)
+* chore(deps-dev): bump @readme/eslint-config from 10.1.0 to 10.1.1 (#42) ([fa20d8f](https://github.com/readmeio/remove-undefined-objects/commit/fa20d8f)), closes [#42](https://github.com/readmeio/remove-undefined-objects/issues/42)
+* chore(deps-dev): bump @readme/eslint-config from 10.1.1 to 10.2.0 (#47) ([8657aff](https://github.com/readmeio/remove-undefined-objects/commit/8657aff)), closes [#47](https://github.com/readmeio/remove-undefined-objects/issues/47)
+* chore(deps-dev): bump @readme/eslint-config from 8.8.3 to 9.0.0 (#33) ([d9efb33](https://github.com/readmeio/remove-undefined-objects/commit/d9efb33)), closes [#33](https://github.com/readmeio/remove-undefined-objects/issues/33)
+* chore(deps-dev): bump @readme/eslint-config from 9.0.0 to 10.1.0 (#37) ([f3ac17d](https://github.com/readmeio/remove-undefined-objects/commit/f3ac17d)), closes [#37](https://github.com/readmeio/remove-undefined-objects/issues/37)
+* chore(deps-dev): bump eslint from 8.20.0 to 8.21.0 (#32) ([7bc2336](https://github.com/readmeio/remove-undefined-objects/commit/7bc2336)), closes [#32](https://github.com/readmeio/remove-undefined-objects/issues/32)
+* chore(deps-dev): bump eslint from 8.21.0 to 8.23.0 (#39) ([4db20c6](https://github.com/readmeio/remove-undefined-objects/commit/4db20c6)), closes [#39](https://github.com/readmeio/remove-undefined-objects/issues/39)
+* chore(deps-dev): bump eslint from 8.23.0 to 8.24.0 (#40) ([0d6719d](https://github.com/readmeio/remove-undefined-objects/commit/0d6719d)), closes [#40](https://github.com/readmeio/remove-undefined-objects/issues/40)
+* chore(deps-dev): bump eslint from 8.24.0 to 8.26.0 (#43) ([8d1399b](https://github.com/readmeio/remove-undefined-objects/commit/8d1399b)), closes [#43](https://github.com/readmeio/remove-undefined-objects/issues/43)
+* chore(deps-dev): bump eslint from 8.26.0 to 8.28.0 (#48) ([e09d870](https://github.com/readmeio/remove-undefined-objects/commit/e09d870)), closes [#48](https://github.com/readmeio/remove-undefined-objects/issues/48)
+* chore(deps-dev): bump husky from 8.0.1 to 8.0.2 (#49) ([9904ebf](https://github.com/readmeio/remove-undefined-objects/commit/9904ebf)), closes [#49](https://github.com/readmeio/remove-undefined-objects/issues/49)
+* chore(deps-dev): bump prettier from 2.7.1 to 2.8.0 (#50) ([2647131](https://github.com/readmeio/remove-undefined-objects/commit/2647131)), closes [#50](https://github.com/readmeio/remove-undefined-objects/issues/50)
+* chore(deps-dev): bump ts-jest from 28.0.7 to 28.0.8 (#34) ([b78ab86](https://github.com/readmeio/remove-undefined-objects/commit/b78ab86)), closes [#34](https://github.com/readmeio/remove-undefined-objects/issues/34)
+* chore(deps-dev): bump typescript from 4.7.4 to 4.8.2 (#38) ([f0c79a3](https://github.com/readmeio/remove-undefined-objects/commit/f0c79a3)), closes [#38](https://github.com/readmeio/remove-undefined-objects/issues/38)
+* chore(deps-dev): bump typescript from 4.8.2 to 4.8.4 (#41) ([e355723](https://github.com/readmeio/remove-undefined-objects/commit/e355723)), closes [#41](https://github.com/readmeio/remove-undefined-objects/issues/41)
+* chore(deps-dev): bump typescript from 4.8.4 to 4.9.3 (#51) ([0c01aea](https://github.com/readmeio/remove-undefined-objects/commit/0c01aea)), closes [#51](https://github.com/readmeio/remove-undefined-objects/issues/51)
+* ci: making ci more friendly to contributors ([4351f66](https://github.com/readmeio/remove-undefined-objects/commit/4351f66))
+
+
+
 ## <small>2.0.1 (2022-07-22)</small>
 
 * feat: exposing TS types ([ae1f797](https://github.com/readmeio/remove-undefined-objects/commit/ae1f797))
