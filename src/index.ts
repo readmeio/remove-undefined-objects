@@ -54,9 +54,7 @@ function stripEmptyObjects(obj: any) {
 
   // Since deleting a key from an array will retain an undefined value in that array, we need to
   // filter them out.
-  return cleanObj.filter(function (el) {
-    return el !== undefined;
-  });
+  return cleanObj.filter(el => el !== undefined);
 }
 
 export default function removeUndefinedObjects(obj?: unknown) {
