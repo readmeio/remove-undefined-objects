@@ -1,3 +1,16 @@
+## 3.0.0 (2023-06-14)
+
+* fix: typescript typings being rewritten on return (#83) ([7a2c8cc](https://github.com/readmeio/remove-undefined-objects/commit/7a2c8cc)), closes [#83](https://github.com/readmeio/remove-undefined-objects/issues/83)
+* feat: dropping support for node 14 (#82) ([eb98e4c](https://github.com/readmeio/remove-undefined-objects/commit/eb98e4c)), closes [#82](https://github.com/readmeio/remove-undefined-objects/issues/82)
+* chore: bumping out of date deps ([5d60c32](https://github.com/readmeio/remove-undefined-objects/commit/5d60c32))
+* chore(deps-dev): bumping deps ([ab90654](https://github.com/readmeio/remove-undefined-objects/commit/ab90654))
+* chore(deps-dev): bumping deps ([0c5af78](https://github.com/readmeio/remove-undefined-objects/commit/0c5af78))
+* chore(deps-dev): bumping out of date deps ([d7b8b8f](https://github.com/readmeio/remove-undefined-objects/commit/d7b8b8f))
+* chore(deps-dev): bumping out of date deps ([4846d0d](https://github.com/readmeio/remove-undefined-objects/commit/4846d0d))
+* chore(deps): bumping out of date deps ([90f6e67](https://github.com/readmeio/remove-undefined-objects/commit/90f6e67))
+
+
+
 ## <small>2.0.2 (2022-12-01)</small>
 
 * chore(deps-dev): bump @commitlint/cli from 17.0.3 to 17.1.2 (#35) ([3efc7cf](https://github.com/readmeio/remove-undefined-objects/commit/3efc7cf)), closes [#35](https://github.com/readmeio/remove-undefined-objects/issues/35)
