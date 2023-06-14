@@ -1,5 +1,15 @@
 import removeUndefinedObjects from '../src';
 
+describe('typings', () => {
+  it('should not blow away typings from supplied objects', () => {
+    const obj: { key: string } = removeUndefinedObjects({
+      key: 'buster',
+    });
+
+    expect(obj).toBeDefined();
+  });
+});
+
 test('should leave primitives alone', () => {
   expect(removeUndefinedObjects(1234)).toBe(1234);
   expect(removeUndefinedObjects('1234')).toBe('1234');
