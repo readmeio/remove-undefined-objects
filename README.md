@@ -20,3 +20,16 @@ import removeUndefinedObjects from 'remove-undefined-objects';
 console.log(removeUndefinedObjects({key: [], key2: 123}));
 // { key2: 123 }
 ```
+
+## Behavior
+
+Any items with the following value will be removed:
+
+* Empty object, `{}`
+* Empty array, `[]`
+* Undefined, `undefined`
+
+The following items will NOT be removed:
+
+* Empty string, `''`
+* Null, `null`
