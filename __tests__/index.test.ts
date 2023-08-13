@@ -1,3 +1,5 @@
+import { describe, test, it, expect } from 'vitest';
+
 import removeUndefinedObjects from '../src';
 
 describe('typings', () => {
