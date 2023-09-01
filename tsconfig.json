@@ -4,9 +4,11 @@
     "baseUrl": "./src/",
     "declaration": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "./dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "target": "ES2020"
   },
   "include": ["./src/**/*"]
 }
