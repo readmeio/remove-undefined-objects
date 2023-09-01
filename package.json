@@ -1,6 +1,6 @@
 {
   "name": "remove-undefined-objects",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Remove undefined properties and empty arrays from an object",
   "license": "MIT",
   "author": "Jon Ursenbach <jon@ursenba.ch>",
@@ -34,7 +34,6 @@
     "prepare": "husky install",
     "pretest": "npm run build; npm run lint",
     "prettier": "prettier --list-different --write \"./**/**.{js,ts}\"",
-    "release": "npx conventional-changelog-cli -i CHANGELOG.md -s && git add CHANGELOG.md",
     "test": "vitest --coverage"
   },
   "devDependencies": {
