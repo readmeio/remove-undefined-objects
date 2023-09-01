@@ -1,6 +1,6 @@
 {
   "name": "remove-undefined-objects",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Remove undefined properties and empty arrays from an object",
   "license": "MIT",
   "author": "Jon Ursenbach <jon@ursenba.ch>",
