@@ -16,5 +16,4 @@ export default defineConfig((options: Options) => ({
   silent: !options.watch,
   sourcemap: true,
   splitting: true,
-  treeshake: true,
 }));
