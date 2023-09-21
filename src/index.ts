@@ -57,7 +57,7 @@ function stripEmptyObjects(obj: any) {
   return cleanObj.filter(el => el !== undefined);
 }
 
-export default function removeUndefinedObjects<T>(obj?: T): T {
+export default function removeUndefinedObjects<T>(obj?: T): T | undefined {
   if (obj === undefined) {
     return undefined;
   }
