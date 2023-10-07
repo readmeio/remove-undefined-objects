@@ -1,10 +1,10 @@
 import { describe, test, it, expect } from 'vitest';
 
-import removeUndefinedObjects from '../src';
+import removeUndefinedObjects from '../src/index.js';
 
 describe('typings', () => {
   it('should not blow away typings from supplied objects', () => {
-    const obj: { key: string } = removeUndefinedObjects({
+    const obj = removeUndefinedObjects({
       key: 'buster',
     });
 
