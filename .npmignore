@@ -1,7 +1,6 @@
-__tests__/
 .github/
 .husky/
 coverage/
+test/
 .eslint*
 .prettier*
-jest.*.js
