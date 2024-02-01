@@ -41,7 +41,7 @@
     "@readme/eslint-config": "^13.1.0",
     "@vitest/coverage-v8": "^1.1.1",
     "eslint": "^8.51.0",
-    "husky": "^8.0.3",
+    "husky": "^9.0.9",
     "prettier": "^3.0.1",
     "tsup": "^8.0.1",
     "typescript": "^5.1.3",
