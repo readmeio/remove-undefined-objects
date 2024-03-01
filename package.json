@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
-    "@commitlint/config-conventional": "^18.1.0",
+    "@commitlint/config-conventional": "^19.0.3",
     "@readme/eslint-config": "^13.1.0",
     "@vitest/coverage-v8": "^1.1.1",
     "eslint": "^8.51.0",
