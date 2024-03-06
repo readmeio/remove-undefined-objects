@@ -30,39 +30,18 @@
     "lint": "tsc --noEmit && eslint . --ext .js,.ts",
     "prebuild": "rm -rf dist/",
     "prepack": "npm run build",
-    "prepare": "husky install",
     "pretest": "npm run lint",
     "prettier": "prettier --list-different --write \"./**/**.{js,ts}\"",
     "test": "vitest run --coverage"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.2.0",
-    "@commitlint/config-conventional": "^18.1.0",
     "@readme/eslint-config": "^13.1.0",
     "@vitest/coverage-v8": "^1.1.1",
     "eslint": "^8.51.0",
-    "husky": "^9.0.9",
     "prettier": "^3.0.1",
     "tsup": "^8.0.1",
     "typescript": "^5.1.3",
     "vitest": "^1.1.1"
   },
-  "prettier": "@readme/eslint-config/prettier",
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ],
-    "rules": {
-      "body-max-line-length": [
-        0,
-        "always",
-        "Infinity"
-      ],
-      "footer-max-line-length": [
-        0,
-        "always",
-        "Infinity"
-      ]
-    }
-  }
+  "prettier": "@readme/eslint-config/prettier"
 }

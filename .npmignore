@@ -1,5 +1,4 @@
 .github/
-.husky/
 coverage/
 test/
 .eslint*
