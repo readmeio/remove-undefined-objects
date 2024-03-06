@@ -35,9 +35,9 @@
     "test": "vitest run --coverage"
   },
   "devDependencies": {
-    "@readme/eslint-config": "^13.1.0",
+    "@readme/eslint-config": "^13.5.0",
     "@vitest/coverage-v8": "^1.1.1",
-    "eslint": "^8.51.0",
+    "eslint": "^8.57.0",
     "prettier": "^3.0.1",
     "tsup": "^8.0.1",
     "typescript": "^5.1.3",
