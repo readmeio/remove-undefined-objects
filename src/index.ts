@@ -64,6 +64,7 @@ export default function removeUndefinedObjects<T>(obj?: T): T | undefined {
 
   // JSON.stringify removes undefined values. Though `[undefined]` will be converted with this to
   // `[null]`, we'll clean that up next.
+  // eslint-disable-next-line try-catch-failsafe/json-parse
   let withoutUndefined = JSON.parse(JSON.stringify(obj));
 
   // Then we recursively remove all empty objects and nullish arrays.
