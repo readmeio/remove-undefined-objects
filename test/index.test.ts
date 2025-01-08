@@ -20,6 +20,20 @@ test('should leave primitives alone', () => {
   expect(removeUndefinedObjects(undefined)).toBeUndefined();
 });
 
+test('should leave only truthy primitives alone when removeAllFalsy is true', () => {
+  expect(removeUndefinedObjects(1234, { removeAllFalsy: true })).toBe(1234);
+  expect(removeUndefinedObjects('1234', { removeAllFalsy: true })).toBe('1234');
+  expect(removeUndefinedObjects(null, { removeAllFalsy: true })).toBeUndefined();
+  expect(removeUndefinedObjects(undefined, { removeAllFalsy: true })).toBeUndefined();
+});
+
+test("should also remove '' and null values when removeAllFalsy is true", () => {
+  expect(removeUndefinedObjects({ value: 1234 }, { removeAllFalsy: true })).toStrictEqual({ value: 1234 });
+  expect(removeUndefinedObjects({ value: '1234' }, { removeAllFalsy: true })).toStrictEqual({ value: '1234' });
+  expect(removeUndefinedObjects({ value: null }, { removeAllFalsy: true })).toBeUndefined();
+  expect(removeUndefinedObjects({ value: undefined }, { removeAllFalsy: true })).toBeUndefined();
+});
+
 test('should remove empty objects with only empty properties', () => {
   const obj = {
     a: {
@@ -63,6 +77,25 @@ test('should remove empty arrays from within object', () => {
   expect(removeUndefinedObjects(obj)).toStrictEqual({
     d: [1234],
     f: null,
+  });
+});
+
+test('should remove empty arrays and falsy values from within object when removeAllFalsy is true', () => {
+  const obj = {
+    a: {
+      b: undefined,
+      c: {
+        d: undefined,
+      },
+    },
+    d: [1234, undefined],
+    e: [],
+    f: null,
+    g: [null, undefined, null],
+  };
+
+  expect(removeUndefinedObjects(obj, { removeAllFalsy: true })).toStrictEqual({
+    d: [1234],
   });
 });
 

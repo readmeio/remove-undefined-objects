@@ -6,30 +6,43 @@ function isEmptyObject(obj: unknown) {
   return typeof obj === 'object' && obj !== null && !Object.keys(obj).length;
 }
 
+export interface RemovalOptions {
+  removeAllFalsy?: boolean;
+}
+
 // Modified from here: https://stackoverflow.com/a/43781499
-function stripEmptyObjects(obj: any) {
+function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
   const cleanObj = obj;
+
+  if (obj === null && options.removeAllFalsy) {
+    return undefined;
+  }
 
   if (!isObject(obj) && !Array.isArray(cleanObj)) {
     return cleanObj;
-  } else if (obj === null) {
-    return undefined;
   }
 
   if (!Array.isArray(cleanObj)) {
     Object.keys(cleanObj).forEach(key => {
       let value = cleanObj[key];
 
-      if (typeof value === 'object' && value !== null) {
-        value = stripEmptyObjects(value);
+      if (typeof value !== 'object') {
+        return;
+      }
 
-        if (isEmptyObject(value)) {
+      if (value === null) {
+        if (options.removeAllFalsy) {
           delete cleanObj[key];
-        } else {
-          cleanObj[key] = value;
         }
-      } else if (value === null) {
-        // Null properties in an object should remain!
+        return;
+      }
+
+      value = stripEmptyObjects(value, options);
+
+      if (isEmptyObject(value)) {
+        delete cleanObj[key];
+      } else {
+        cleanObj[key] = value;
       }
     });
 
@@ -39,7 +52,7 @@ function stripEmptyObjects(obj: any) {
   cleanObj.forEach((o, idx) => {
     let value = o;
     if (typeof value === 'object' && value !== null) {
-      value = stripEmptyObjects(value);
+      value = stripEmptyObjects(value, options);
 
       if (isEmptyObject(value)) {
         delete cleanObj[idx];
@@ -57,7 +70,7 @@ function stripEmptyObjects(obj: any) {
   return cleanObj.filter(el => el !== undefined);
 }
 
-export default function removeUndefinedObjects<T>(obj?: T): T | undefined {
+export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOptions): T | undefined {
   if (obj === undefined) {
     return undefined;
   }
@@ -68,7 +81,7 @@ export default function removeUndefinedObjects<T>(obj?: T): T | undefined {
   let withoutUndefined = JSON.parse(JSON.stringify(obj));
 
   // Then we recursively remove all empty objects and nullish arrays.
-  withoutUndefined = stripEmptyObjects(withoutUndefined);
+  withoutUndefined = stripEmptyObjects(withoutUndefined, options);
 
   // If the only thing that's leftover is an empty object then return nothing.
   if (isEmptyObject(withoutUndefined)) return undefined;
