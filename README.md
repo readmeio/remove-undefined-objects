@@ -31,3 +31,17 @@ The following items will NOT be removed:
 
 * Empty string, `''`
 * Null, `null`
+
+## Options
+
+### `removeAllFalsy`
+
+Optional boolean.
+If provided, the empty string `''` and `null` will be removed as well.
+
+```js
+import removeUndefinedObjects from 'remove-undefined-objects';
+
+console.log(removeUndefinedObjects({key1: null, key2: 123, key3: ''}), {removeAllFalsy: true});
+// { key2: 123 }
+```
