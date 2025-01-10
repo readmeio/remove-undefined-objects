@@ -6,7 +6,7 @@ function isEmptyObject(obj: unknown) {
   return typeof obj === 'object' && obj !== null && !Object.keys(obj).length;
 }
 
-export interface RemovalOptions {
+interface RemovalOptions {
   removeAllFalsy?: boolean;
 }
 
