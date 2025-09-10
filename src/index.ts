@@ -16,6 +16,7 @@ interface RemovalOptions {
 }
 
 // Modified from here: https://stackoverflow.com/a/43781499
+// biome-ignore lint/suspicious/noExplicitAny: This method does its own type assertions.
 function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
   const cleanObj = obj;
 
