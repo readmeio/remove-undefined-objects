@@ -42,7 +42,9 @@ If provided, empty arrays `[]` will not get removed
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
 
-console.log(removeUndefinedObjects({key1: [], key2: [undefined], key3: {key4: 'a', key5: []}}, {preserveEmptyArray: true}));
+console.log(
+  removeUndefinedObjects({ key1: [], key2: [undefined], key3: { key4: 'a', key5: [] } }, { preserveEmptyArray: true }),
+);
 // { key1: [], key2: [], key3: { key4: 'a', key5: [] } }
 ```
 
@@ -54,6 +56,6 @@ If provided, the empty string `''` and `null` will be removed as well.
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
 
-console.log(removeUndefinedObjects({key1: null, key2: 123, key3: ''}, {removeAllFalsy: true}));
+console.log(removeUndefinedObjects({ key1: null, key2: 123, key3: '' }, { removeAllFalsy: true }));
 // { key2: 123 }
 ```
