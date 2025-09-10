@@ -10,6 +10,32 @@ interface RemovalOptions {
   removeAllFalsy?: boolean;
 }
 
+// Remove objects that has undefined value or recursively contain undefined values
+function removeUndefined(obj: any): any {
+  if (obj === undefined) {
+    return undefined;
+  }
+  // Preserve null
+  if (obj === null) {
+    return null;
+  }
+  // Remove undefined in arrays
+  if (Array.isArray(obj)) {
+    return obj.map(removeUndefined).filter(item => item !== undefined);
+  }
+  if (typeof obj === 'object') {
+    const cleaned: any = {};
+    Object.entries(obj).forEach(([key, value]) => {
+      const cleanedValue = removeUndefined(value);
+      if (cleanedValue !== undefined) {
+        cleaned[key] = cleanedValue;
+      }
+    });
+    return cleaned;
+  }
+  return obj;
+}
+
 // Modified from here: https://stackoverflow.com/a/43781499
 function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
   const cleanObj = obj;
@@ -59,8 +85,7 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
       } else {
         cleanObj[idx] = value;
       }
-    } else if (value === null) {
-      // Null entries within an array should be removed.
+    } else if (value === null && options.removeAllFalsy) {
       delete cleanObj[idx];
     }
   });
@@ -75,12 +100,11 @@ export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOpti
     return undefined;
   }
 
-  // JSON.stringify removes undefined values. Though `[undefined]` will be converted with this to
-  // `[null]`, we'll clean that up next.
-  // eslint-disable-next-line try-catch-failsafe/json-parse
-  let withoutUndefined = JSON.parse(JSON.stringify(obj));
+  // Remove objects that recursively contain undefined values
+  // E.g. { a: { b: undefined } } -> { a: {} }
+  let withoutUndefined = removeUndefined(obj);
 
-  // Then we recursively remove all empty objects and nullish arrays.
+  // Then we recursively remove all empty objects and nullish arrays
   withoutUndefined = stripEmptyObjects(withoutUndefined, options);
 
   // If the only thing that's leftover is an empty object then return nothing.
