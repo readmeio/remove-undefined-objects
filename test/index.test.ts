@@ -37,7 +37,25 @@ test("should also remove '' and null values when removeAllFalsy is true", () => 
 test('should not remove empty arrays when preserveEmptyArray is true', () => {
   expect(removeUndefinedObjects({ value: [] }, { preserveEmptyArray: true })).toStrictEqual({ value: [] });
   expect(removeUndefinedObjects({ value: [undefined] }, { preserveEmptyArray: true })).toStrictEqual({ value: [] });
-  expect(removeUndefinedObjects({ value: [null] }, { preserveEmptyArray: true })).toStrictEqual({ value: [] });
+  expect(
+    removeUndefinedObjects(
+      { value: { a: 'a', nested: { b: 'b', nested2: { c: [undefined], d: [] } } } },
+      { preserveEmptyArray: true },
+    ),
+  ).toStrictEqual({ value: { a: 'a', nested: { b: 'b', nested2: { c: [], d: [] } } } });
+});
+
+test('should leave alone non-falsey values when preserveEmptyArray is true', () => {
+  expect(removeUndefinedObjects({ value: { a: [1, 2, 3] }, b: null }, { preserveEmptyArray: true })).toStrictEqual({
+    value: { a: [1, 2, 3] },
+    b: null,
+  });
+  expect(
+    removeUndefinedObjects(
+      { value: { a: [1, undefined], nested: { b: 'b', c: [undefined], d: [] } } },
+      { preserveEmptyArray: true },
+    ),
+  ).toStrictEqual({ value: { a: [1], nested: { b: 'b', c: [], d: [] } } });
 });
 
 test('should remove empty objects with only empty properties', () => {
