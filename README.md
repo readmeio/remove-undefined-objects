@@ -15,7 +15,7 @@ npm install --save remove-undefined-objects
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
 
-console.log(removeUndefinedObjects({key: [], key2: 123}));
+console.log(removeUndefinedObjects({ key: [], key2: 123 }));
 // { key2: 123 }
 ```
 
@@ -23,14 +23,14 @@ console.log(removeUndefinedObjects({key: [], key2: 123}));
 
 Any items with the following value will be removed:
 
-* Empty object, `{}`
-* Empty array, `[]`
-* Undefined, `undefined`
+- Empty object, `{}`
+- Empty array, `[]`
+- Undefined, `undefined`
 
 The following items will NOT be removed:
 
-* Empty string, `''`
-* Null, `null`
+- Empty string, `''`
+- Null, `null`
 
 ## Options
 
@@ -42,6 +42,6 @@ If provided, the empty string `''` and `null` will be removed as well.
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
 
-console.log(removeUndefinedObjects({key1: null, key2: 123, key3: ''}), {removeAllFalsy: true});
+console.log(removeUndefinedObjects({ key1: null, key2: 123, key3: '' }), { removeAllFalsy: true });
 // { key2: 123 }
 ```
