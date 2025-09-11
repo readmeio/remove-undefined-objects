@@ -77,7 +77,6 @@ test('should remove empty arrays from within object', () => {
   expect(removeUndefinedObjects(obj)).toStrictEqual({
     d: [1234],
     f: null,
-    g: [null, null],
   });
 });
 
@@ -100,16 +99,30 @@ test('should remove empty arrays and falsy values from within object when remove
   });
 });
 
-test('should remove undefined values from arrays & not null values', () => {
+test('should remove undefined and null values from arrays', () => {
   expect(removeUndefinedObjects([undefined, undefined])).toBeUndefined();
-  expect(removeUndefinedObjects([null])).toStrictEqual([null]);
+  expect(removeUndefinedObjects([null])).toBeUndefined();
   expect(removeUndefinedObjects(['1234', null, undefined, { a: null, b: undefined }, '   ', ''])).toStrictEqual([
     '1234',
-    null,
     {
       a: null,
     },
     '   ',
     '',
   ]);
+});
+
+test('should not remove null values from arrays when preserveArrayNulls is true', () => {
+  expect(removeUndefinedObjects([null], { preserveArrayNulls: true })).toStrictEqual([null]);
+  expect(removeUndefinedObjects([undefined], { preserveArrayNulls: true })).toBeUndefined();
+  expect(removeUndefinedObjects([null, undefined], { preserveArrayNulls: true })).toStrictEqual([null]);
+  expect(
+    removeUndefinedObjects([null, undefined, { a: null, b: undefined }], { preserveArrayNulls: true }),
+  ).toStrictEqual([null, { a: null }]);
+  expect(
+    removeUndefinedObjects(
+      { a: 'a', empty_nested: { nested2: { nested3: undefined } }, nested_array: { b: [null, 1, undefined, 2] } },
+      { preserveArrayNulls: true },
+    ),
+  ).toStrictEqual({ a: 'a', nested_array: { b: [null, 1, 2] } });
 });

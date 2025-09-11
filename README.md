@@ -34,6 +34,18 @@ The following items will NOT be removed:
 
 ## Options
 
+### `preserveArrayNulls`
+
+Optional boolean.
+If provided, null values in arrays will be preserved instead of being removed.
+
+```js
+import removeUndefinedObjects from 'remove-undefined-objects';
+
+console.log(removeUndefinedObjects({ key1: [null, undefined], key2: 123 }, { preserveArrayNulls: true }));
+// { key1: [null], key2: 123 }
+```
+
 ### `removeAllFalsy`
 
 Optional boolean.

@@ -7,10 +7,12 @@ function isEmptyObject(obj: unknown) {
 }
 
 interface RemovalOptions {
+  preserveArrayNulls?: boolean;
   removeAllFalsy?: boolean;
 }
 
 // Remove objects that has undefined value or recursively contain undefined values
+// biome-ignore lint/suspicious/noExplicitAny: This method does its own type assertions.
 function removeUndefined(obj: any): any {
   if (obj === undefined) {
     return undefined;
@@ -24,7 +26,8 @@ function removeUndefined(obj: any): any {
     return obj.map(removeUndefined).filter(item => item !== undefined);
   }
   if (typeof obj === 'object') {
-    const cleaned: any = {};
+    // biome-ignore lint/suspicious/noExplicitAny: We're just passing around the object values
+    const cleaned: Record<string, any> = {};
     Object.entries(obj).forEach(([key, value]) => {
       const cleanedValue = removeUndefined(value);
       if (cleanedValue !== undefined) {
@@ -86,7 +89,7 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
       } else {
         cleanObj[idx] = value;
       }
-    } else if (value === null && options.removeAllFalsy) {
+    } else if (value === null && (options.removeAllFalsy || !options.preserveArrayNulls)) {
       delete cleanObj[idx];
     }
   });
@@ -101,9 +104,10 @@ export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOpti
     return undefined;
   }
 
-  // Remove objects that recursively contain undefined values
-  // E.g. { a: { b: undefined } } -> { a: {} }
-  let withoutUndefined = removeUndefined(obj);
+  // If array nulls are preserved, use the custom removeUndefined function so that
+  // undefined values in arrays aren't converted to nulls, which stringify does
+  // If we're not preserving array nulls (default behavior), it doesn't matter that the undefined array values are converted to nulls
+  let withoutUndefined = options?.preserveArrayNulls ? removeUndefined(obj) : JSON.parse(JSON.stringify(obj));
 
   // Then we recursively remove all empty objects and nullish arrays
   withoutUndefined = stripEmptyObjects(withoutUndefined, options);
