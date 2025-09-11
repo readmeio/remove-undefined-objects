@@ -39,6 +39,12 @@ test('should not remove empty arrays when preserveEmptyArray is true', () => {
   expect(removeUndefinedObjects({ value: [undefined] }, { preserveEmptyArray: true })).toStrictEqual({ value: [] });
   expect(
     removeUndefinedObjects(
+      { key1: [], key2: [undefined], nested: { key3: 'a', key4: [] } },
+      { preserveEmptyArray: true },
+    ),
+  ).toStrictEqual({ key1: [], key2: [], nested: { key3: 'a', key4: [] } });
+  expect(
+    removeUndefinedObjects(
       { value: { a: 'a', nested: { b: 'b', nested2: { c: [undefined], d: [] } } } },
       { preserveEmptyArray: true },
     ),

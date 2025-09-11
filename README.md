@@ -42,10 +42,16 @@ If provided, empty arrays `[]` will not get removed
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
 
+console.log(removeUndefinedObjects({ key1: [], key2: [undefined], nested: { key3: 'a', key4: [] } }));
+// { nested: { key3: 'a' } }
+
 console.log(
-  removeUndefinedObjects({ key1: [], key2: [undefined], key3: { key4: 'a', key5: [] } }, { preserveEmptyArray: true }),
+  removeUndefinedObjects(
+    { key1: [], key2: [undefined], nested: { key3: 'a', key4: [] } },
+    { preserveEmptyArray: true },
+  ),
 );
-// { key1: [], key2: [], key3: { key4: 'a', key5: [] } }
+// { key1: [], key2: [], nested: { key3: 'a', key4: [] } }
 ```
 
 ### `removeAllFalsy`
