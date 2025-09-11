@@ -7,7 +7,7 @@ function isEmptyObject(obj: unknown) {
 }
 
 interface RemovalOptions {
-  preserveArrayNulls?: boolean;
+  preserveNullishArrays?: boolean;
   removeAllFalsy?: boolean;
 }
 
@@ -89,7 +89,8 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
       } else {
         cleanObj[idx] = value;
       }
-    } else if (value === null && (options.removeAllFalsy || !options.preserveArrayNulls)) {
+    } else if (value === null && (options.removeAllFalsy || !options.preserveNullishArrays)) {
+      // Null entries within an array should be removed by default, unless explicitly preserved
       delete cleanObj[idx];
     }
   });
@@ -107,7 +108,7 @@ export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOpti
   // If array nulls are preserved, use the custom removeUndefined function so that
   // undefined values in arrays aren't converted to nulls, which stringify does
   // If we're not preserving array nulls (default behavior), it doesn't matter that the undefined array values are converted to nulls
-  let withoutUndefined = options?.preserveArrayNulls ? removeUndefined(obj) : JSON.parse(JSON.stringify(obj));
+  let withoutUndefined = options?.preserveNullishArrays ? removeUndefined(obj) : JSON.parse(JSON.stringify(obj));
 
   // Then we recursively remove all empty objects and nullish arrays
   withoutUndefined = stripEmptyObjects(withoutUndefined, options);

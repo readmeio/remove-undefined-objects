@@ -34,7 +34,7 @@ The following items will NOT be removed:
 
 ## Options
 
-### `preserveArrayNulls`
+### `preserveNullishArrays`
 
 Optional boolean.
 If provided, null values in arrays will be preserved instead of being removed.
@@ -44,7 +44,9 @@ import removeUndefinedObjects from 'remove-undefined-objects';
 
 console.log(removeUndefinedObjects({ key1: [null, undefined], key2: 123, key3: null }));
 // { key2: 123, key3: null }
-console.log(removeUndefinedObjects({ key1: [null, undefined], key2: 123, key3: null }, { preserveArrayNulls: true }));
+console.log(
+  removeUndefinedObjects({ key1: [null, undefined], key2: 123, key3: null }, { preserveNullishArrays: true }),
+);
 // { key1: [null], key2: 123, key3: null }
 ```
 
