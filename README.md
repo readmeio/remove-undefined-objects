@@ -21,7 +21,7 @@ console.log(removeUndefinedObjects({ key: [], key2: 123 }));
 
 ## Behavior
 
-Any items with the following value will be removed:
+Any items with the following value will be removed by default:
 
 - Empty object, `{}`
 - Empty array, `[]`
@@ -33,6 +33,24 @@ The following items will NOT be removed:
 - Null, `null`
 
 ## Options
+
+### `preserveEmptyArray`
+
+Optional boolean.
+If provided, empty arrays `[]` will not get removed
+
+```js
+console.log(removeUndefinedObjects({ key1: [], key2: [undefined], nested: { key3: 'a', key4: [] } }));
+// { nested: { key3: 'a' } }
+
+console.log(
+  removeUndefinedObjects(
+    { key1: [], key2: [undefined], nested: { key3: 'a', key4: [] } },
+    { preserveEmptyArray: true },
+  ),
+);
+// { key1: [], key2: [], nested: { key3: 'a', key4: [] } }
+```
 
 ### `preserveNullishArrays`
 
@@ -58,6 +76,6 @@ If provided, the empty string `''` and `null` will be removed as well.
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
 
-console.log(removeUndefinedObjects({ key1: null, key2: 123, key3: '' }), { removeAllFalsy: true });
+console.log(removeUndefinedObjects({ key1: null, key2: 123, key3: '' }, { removeAllFalsy: true }));
 // { key2: 123 }
 ```
