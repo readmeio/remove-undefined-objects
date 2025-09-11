@@ -3,10 +3,15 @@ function isObject(obj: unknown) {
 }
 
 function isEmptyObject(obj: unknown) {
-  return typeof obj === 'object' && obj !== null && !Object.keys(obj).length;
+  return typeof obj === 'object' && obj !== null && !Array.isArray(obj) && !Object.keys(obj).length;
+}
+
+function isEmptyArray(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
 }
 
 interface RemovalOptions {
+  preserveEmptyArray?: boolean;
   removeAllFalsy?: boolean;
 }
 
@@ -42,6 +47,8 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
 
       if (isEmptyObject(value)) {
         delete cleanObj[key];
+      } else if (isEmptyArray(value) && !options.preserveEmptyArray) {
+        delete cleanObj[key];
       } else {
         cleanObj[key] = value;
       }
@@ -56,6 +63,8 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
       value = stripEmptyObjects(value, options);
 
       if (isEmptyObject(value)) {
+        delete cleanObj[idx];
+      } else if (isEmptyArray(value) && !options.preserveEmptyArray) {
         delete cleanObj[idx];
       } else {
         cleanObj[idx] = value;
@@ -84,8 +93,9 @@ export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOpti
   // Then we recursively remove all empty objects and nullish arrays.
   withoutUndefined = stripEmptyObjects(withoutUndefined, options);
 
-  // If the only thing that's leftover is an empty object then return nothing.
-  if (isEmptyObject(withoutUndefined)) return undefined;
+  // If the only thing that's leftover is an empty object or empty array then return nothing.
+  if (isEmptyObject(withoutUndefined) || (isEmptyArray(withoutUndefined) && !options?.preserveEmptyArray))
+    return undefined;
 
   return withoutUndefined;
 }
