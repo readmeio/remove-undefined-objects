@@ -54,6 +54,22 @@ console.log(
 // { key1: [], key2: [], nested: { key3: 'a', key4: [] } }
 ```
 
+### `preserveNullishArrays`
+
+Optional boolean.
+If provided, null values in arrays will be preserved instead of being removed.
+
+```js
+import removeUndefinedObjects from 'remove-undefined-objects';
+
+console.log(removeUndefinedObjects({ key1: [null, undefined], key2: 123, key3: null }));
+// { key2: 123, key3: null }
+console.log(
+  removeUndefinedObjects({ key1: [null, undefined], key2: 123, key3: null }, { preserveNullishArrays: true }),
+);
+// { key1: [null], key2: 123, key3: null }
+```
+
 ### `removeAllFalsy`
 
 Optional boolean.

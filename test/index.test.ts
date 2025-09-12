@@ -141,3 +141,18 @@ test('should remove undefined and null values from arrays', () => {
     '',
   ]);
 });
+
+test('should not remove null values from arrays when preserveArrayNulls is true', () => {
+  expect(removeUndefinedObjects([null], { preserveNullishArrays: true })).toStrictEqual([null]);
+  expect(removeUndefinedObjects([undefined], { preserveNullishArrays: true })).toBeUndefined();
+  expect(removeUndefinedObjects([null, undefined], { preserveNullishArrays: true })).toStrictEqual([null]);
+  expect(
+    removeUndefinedObjects([null, undefined, { a: null, b: undefined }], { preserveNullishArrays: true }),
+  ).toStrictEqual([null, { a: null }]);
+  expect(
+    removeUndefinedObjects(
+      { a: 'a', empty_nested: { nested2: { nested3: undefined } }, nested_array: { b: [null, 1, undefined, 2] } },
+      { preserveNullishArrays: true },
+    ),
+  ).toStrictEqual({ a: 'a', nested_array: { b: [null, 1, 2] } });
+});

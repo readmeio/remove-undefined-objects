@@ -12,7 +12,36 @@ function isEmptyArray(arr: unknown) {
 
 interface RemovalOptions {
   preserveEmptyArray?: boolean;
+  preserveNullishArrays?: boolean;
   removeAllFalsy?: boolean;
+}
+
+// Remove objects that has undefined value or recursively contain undefined values
+// biome-ignore lint/suspicious/noExplicitAny: This method does its own type assertions.
+function removeUndefined(obj: any): any {
+  if (obj === undefined) {
+    return undefined;
+  }
+  // Preserve null
+  if (obj === null) {
+    return null;
+  }
+  // Remove undefined in arrays
+  if (Array.isArray(obj)) {
+    return obj.map(removeUndefined).filter(item => item !== undefined);
+  }
+  if (typeof obj === 'object') {
+    // biome-ignore lint/suspicious/noExplicitAny: We're just passing around the object values
+    const cleaned: Record<string, any> = {};
+    Object.entries(obj).forEach(([key, value]) => {
+      const cleanedValue = removeUndefined(value);
+      if (cleanedValue !== undefined) {
+        cleaned[key] = cleanedValue;
+      }
+    });
+    return cleaned;
+  }
+  return obj;
 }
 
 // Modified from here: https://stackoverflow.com/a/43781499
@@ -69,8 +98,8 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
       } else {
         cleanObj[idx] = value;
       }
-    } else if (value === null) {
-      // Null entries within an array should be removed.
+    } else if (value === null && (options.removeAllFalsy || !options.preserveNullishArrays)) {
+      // Null entries within an array should be removed by default, unless explicitly preserved
       delete cleanObj[idx];
     }
   });
@@ -85,12 +114,12 @@ export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOpti
     return undefined;
   }
 
-  // JSON.stringify removes undefined values. Though `[undefined]` will be converted with this to
-  // `[null]`, we'll clean that up next.
-  // eslint-disable-next-line try-catch-failsafe/json-parse
-  let withoutUndefined = JSON.parse(JSON.stringify(obj));
+  // If array nulls are preserved, use the custom removeUndefined function so that
+  // undefined values in arrays aren't converted to nulls, which stringify does
+  // If we're not preserving array nulls (default behavior), it doesn't matter that the undefined array values are converted to nulls
+  let withoutUndefined = options?.preserveNullishArrays ? removeUndefined(obj) : JSON.parse(JSON.stringify(obj));
 
-  // Then we recursively remove all empty objects and nullish arrays.
+  // Then we recursively remove all empty objects and nullish arrays
   withoutUndefined = stripEmptyObjects(withoutUndefined, options);
 
   // If the only thing that's leftover is an empty object or empty array then return nothing.
