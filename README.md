@@ -40,6 +40,8 @@ Optional boolean.
 If provided, empty arrays `[]` will not get removed
 
 ```js
+import removeUndefinedObjects from 'remove-undefined-objects';
+
 console.log(removeUndefinedObjects({ key1: [], key2: [undefined], nested: { key3: 'a', key4: [] } }));
 // { nested: { key3: 'a' } }
 
