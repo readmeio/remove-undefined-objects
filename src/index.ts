@@ -109,6 +109,7 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
   return cleanObj.filter(el => el !== undefined);
 }
 
+// biome-ignore lint/style/noDefaultExport: This is the library's only export, a default is fine.
 export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOptions): T | undefined {
   if (obj === undefined) {
     return undefined;

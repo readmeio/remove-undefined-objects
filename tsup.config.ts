@@ -1,8 +1,8 @@
 import type { Options } from 'tsup';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from 'tsup';
 
+// biome-ignore lint/style/noDefaultExport: `tsup` requires a default export.
 export default defineConfig((options: Options) => ({
   ...options,
 
