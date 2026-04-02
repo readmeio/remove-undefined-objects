@@ -2,8 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "es6",
-    "moduleResolution": "node",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "rootDir": ".."
   },
   "include": ["../src/**/*", "*.ts"]
 }
