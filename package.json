@@ -2,10 +2,20 @@
   "name": "remove-undefined-objects",
   "version": "8.0.1",
   "description": "Remove undefined properties and empty arrays from an object",
+  "bugs": {
+    "url": "https://github.com/readmeio/remove-undefined-objects/issues"
+  },
   "license": "MIT",
   "author": "Jon Ursenbach <jon@ursenba.ch>",
-  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/readmeio/remove-undefined-objects.git"
+  },
   "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -19,36 +29,25 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": ">=22"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/readmeio/remove-undefined-objects.git"
-  },
-  "bugs": {
-    "url": "https://github.com/readmeio/remove-undefined-objects/issues"
-  },
   "scripts": {
     "build": "tsdown",
-    "lint": "tsc --noEmit && biome check && prettier --check .",
+    "format": "npx oxlint --fix && npx oxfmt --write",
+    "lint": "tsc --noEmit && npx oxlint && npx oxfmt --check .",
     "prebuild": "rm -rf dist/",
     "prepack": "npm run build",
     "pretest": "npm run lint",
-    "prettier": "prettier --check --write .",
     "test": "vitest run --coverage"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.10",
-    "@readme/standards": "^2.4.1",
-    "@vitest/coverage-v8": "^4.1.2",
-    "prettier": "^3.0.1",
+    "@readme/oxlint-config": "^1.1.2",
+    "@vitest/coverage-v8": "^4.1.5",
+    "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0",
     "tsdown": "^0.21.7",
     "typescript": "^6.0.2",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.5"
   },
-  "prettier": "@readme/standards/prettier"
+  "engines": {
+    "node": ">=22"
+  }
 }

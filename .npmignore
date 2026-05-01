@@ -1,5 +1,5 @@
 .github/
 coverage/
 test/
-.biome*
-.prettier*
+oxfmt.config.ts
+oxlint.config.ts
