@@ -57,7 +57,7 @@ console.log(
 ### `preserveEmptyObject`
 
 Optional boolean.
-If provided, empty objects `{}` will not get removed.
+If provided, empty objects will not be removed.
 
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
