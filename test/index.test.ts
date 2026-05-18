@@ -90,6 +90,32 @@ it('should remove empty objects with only undefined properties', () => {
   expect(removeUndefinedObjects(obj)).toBeUndefined();
 });
 
+it('should not remove empty objects when preserveEmptyObject is true', () => {
+  expect(removeUndefinedObjects({}, { preserveEmptyObject: true })).toStrictEqual({});
+  expect(removeUndefinedObjects({ value: {} }, { preserveEmptyObject: true })).toStrictEqual({ value: {} });
+  expect(removeUndefinedObjects({ value: { nested: {} } }, { preserveEmptyObject: true })).toStrictEqual({
+    value: { nested: {} },
+  });
+});
+
+it('should preserve objects that become empty after removing undefined properties', () => {
+  expect(removeUndefinedObjects({ value: { nested: undefined } }, { preserveEmptyObject: true })).toStrictEqual({
+    value: {},
+  });
+  expect(
+    removeUndefinedObjects(
+      {
+        value: {
+          nested: {
+            deeper: undefined,
+          },
+        },
+      },
+      { preserveEmptyObject: true },
+    ),
+  ).toStrictEqual({ value: { nested: {} } });
+});
+
 it('should remove empty arrays from within object', () => {
   const obj = {
     a: {
@@ -140,6 +166,19 @@ it('should remove undefined and null values from arrays', () => {
     '   ',
     '',
   ]);
+});
+
+it('should not remove empty object values from arrays when preserveEmptyObject is true', () => {
+  expect(removeUndefinedObjects([{}, { a: undefined }, { b: 'b' }], { preserveEmptyObject: true })).toStrictEqual([
+    {},
+    {},
+    { b: 'b' },
+  ]);
+  expect(
+    removeUndefinedObjects({ value: [{}, { a: undefined }, { b: [] }] }, { preserveEmptyObject: true }),
+  ).toStrictEqual({
+    value: [{}, {}, {}],
+  });
 });
 
 it('should not remove null values from arrays when preserveArrayNulls is true', () => {

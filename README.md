@@ -54,6 +54,23 @@ console.log(
 // { key1: [], key2: [], nested: { key3: 'a', key4: [] } }
 ```
 
+### `preserveEmptyObject`
+
+Optional boolean.
+If provided, empty objects `{}` will not get removed.
+
+```js
+import removeUndefinedObjects from 'remove-undefined-objects';
+
+console.log(removeUndefinedObjects({ key1: {}, key2: { nested: undefined }, key3: 123 }));
+// { key3: 123 }
+
+console.log(
+  removeUndefinedObjects({ key1: {}, key2: { nested: undefined }, key3: 123 }, { preserveEmptyObject: true }),
+);
+// { key1: {}, key2: {}, key3: 123 }
+```
+
 ### `preserveNullishArrays`
 
 Optional boolean.
