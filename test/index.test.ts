@@ -181,13 +181,17 @@ it('should not remove empty object values from arrays when preserveEmptyObject i
   });
 });
 
-it('should remove empty object values from arrays when preserveEmptyObjectsInArrays is false', () => {
+it('should preserve empty object values by context', () => {
+  expect(removeUndefinedObjects({}, { preserveEmptyObject: { root: true } })).toStrictEqual({});
+  expect(removeUndefinedObjects({ value: {} }, { preserveEmptyObject: { root: true } })).toStrictEqual({});
+  expect(removeUndefinedObjects({}, { preserveEmptyObject: { objectProperty: true } })).toBeUndefined();
+
   expect(
-    removeUndefinedObjects([{}, { a: undefined }, { b: 'b' }], {
-      preserveEmptyObject: true,
-      preserveEmptyObjectsInArrays: false,
-    }),
-  ).toStrictEqual([{ b: 'b' }]);
+    removeUndefinedObjects(
+      { value: {}, nested: { value: undefined } },
+      { preserveEmptyObject: { objectProperty: true } },
+    ),
+  ).toStrictEqual({ value: {}, nested: {} });
 
   expect(
     removeUndefinedObjects(
@@ -199,8 +203,10 @@ it('should remove empty object values from arrays when preserveEmptyObjectsInArr
         array: [{}, { emptyObject: {} }, { value: 'value' }],
       },
       {
-        preserveEmptyObject: true,
-        preserveEmptyObjectsInArrays: false,
+        preserveEmptyObject: {
+          objectProperty: true,
+          root: true,
+        },
       },
     ),
   ).toStrictEqual({
@@ -216,20 +222,82 @@ it('should remove empty object values from arrays when preserveEmptyObjectsInArr
       { value: [{}, { a: undefined }] },
       {
         preserveEmptyArray: true,
-        preserveEmptyObject: true,
-        preserveEmptyObjectsInArrays: false,
+        preserveEmptyObject: {
+          objectProperty: true,
+          root: true,
+        },
       },
     ),
   ).toStrictEqual({ value: [] });
-});
 
-it('should preserve empty object values from arrays when preserveEmptyObjectsInArrays is true', () => {
   expect(
     removeUndefinedObjects([{}, { a: undefined }, { b: 'b' }], {
-      preserveEmptyObject: false,
-      preserveEmptyObjectsInArrays: true,
+      preserveEmptyObject: { arrayItem: true },
     }),
   ).toStrictEqual([{}, {}, { b: 'b' }]);
+});
+
+it('should preserve empty arrays by context', () => {
+  expect(removeUndefinedObjects([], { preserveEmptyArray: { root: true } })).toStrictEqual([]);
+  expect(removeUndefinedObjects({ value: [] }, { preserveEmptyArray: { root: true } })).toBeUndefined();
+  expect(removeUndefinedObjects([], { preserveEmptyArray: { objectProperty: true } })).toBeUndefined();
+
+  expect(
+    removeUndefinedObjects(
+      { value: [], nested: { value: [undefined] } },
+      { preserveEmptyArray: { objectProperty: true } },
+    ),
+  ).toStrictEqual({ value: [], nested: { value: [] } });
+
+  expect(
+    removeUndefinedObjects([[], [undefined], ['value']], {
+      preserveEmptyArray: { arrayItem: true },
+    }),
+  ).toStrictEqual([[], [], ['value']]);
+});
+
+it('should preserve empty objects and arrays by context when both maps are supplied', () => {
+  expect(
+    removeUndefinedObjects(
+      {
+        emptyArrayProperty: [],
+        emptyObjectProperty: {},
+        nested: {
+          emptyArrayProperty: [undefined],
+          emptyObjectProperty: { value: undefined },
+        },
+        array: [
+          {},
+          [],
+          {
+            emptyArrayProperty: [],
+            emptyObjectProperty: {},
+          },
+          ['value'],
+          { value: 'value' },
+        ],
+      },
+      {
+        preserveEmptyArray: { objectProperty: true },
+        preserveEmptyObject: { objectProperty: true },
+      },
+    ),
+  ).toStrictEqual({
+    emptyArrayProperty: [],
+    emptyObjectProperty: {},
+    nested: {
+      emptyArrayProperty: [],
+      emptyObjectProperty: {},
+    },
+    array: [
+      {
+        emptyArrayProperty: [],
+        emptyObjectProperty: {},
+      },
+      ['value'],
+      { value: 'value' },
+    ],
+  });
 });
 
 it('should not remove null values from arrays when preserveArrayNulls is true', () => {

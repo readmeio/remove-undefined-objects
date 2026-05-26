@@ -2,4 +2,4 @@
 'remove-undefined-objects': minor
 ---
 
-Add `preserveEmptyObjectsInArrays` to control whether empty object array items are preserved separately from empty object properties.
+Allow `preserveEmptyObject` and `preserveEmptyArray` to preserve empty values by context.

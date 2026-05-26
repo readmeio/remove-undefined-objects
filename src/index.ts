@@ -10,16 +10,23 @@ function isEmptyArray(arr: unknown) {
   return Array.isArray(arr) && arr.length === 0;
 }
 
+type PreservationContext = 'arrayItem' | 'objectProperty' | 'root';
+
+type PreservationRule = boolean | Partial<Record<PreservationContext, boolean>>;
+
 interface RemovalOptions {
-  preserveEmptyArray?: boolean;
-  preserveEmptyObject?: boolean;
-  preserveEmptyObjectsInArrays?: boolean;
+  preserveEmptyArray?: PreservationRule;
+  preserveEmptyObject?: PreservationRule;
   preserveNullishArrays?: boolean;
   removeAllFalsy?: boolean;
 }
 
-function shouldPreserveEmptyObjectInArray(options: RemovalOptions) {
-  return options.preserveEmptyObjectsInArrays ?? options.preserveEmptyObject;
+function shouldPreserve(rule: PreservationRule | undefined, context: PreservationContext) {
+  if (typeof rule === 'boolean') {
+    return rule;
+  }
+
+  return rule?.[context] ?? false;
 }
 
 // Remove objects that has undefined value or recursively contain undefined values
@@ -77,9 +84,9 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
 
       value = stripEmptyObjects(value, options);
 
-      if (isEmptyObject(value) && !options.preserveEmptyObject) {
+      if (isEmptyObject(value) && !shouldPreserve(options.preserveEmptyObject, 'objectProperty')) {
         delete cleanObj[key];
-      } else if (isEmptyArray(value) && !options.preserveEmptyArray) {
+      } else if (isEmptyArray(value) && !shouldPreserve(options.preserveEmptyArray, 'objectProperty')) {
         delete cleanObj[key];
       } else {
         cleanObj[key] = value;
@@ -94,9 +101,9 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
     if (typeof value === 'object' && value !== null) {
       value = stripEmptyObjects(value, options);
 
-      if (isEmptyObject(value) && !shouldPreserveEmptyObjectInArray(options)) {
+      if (isEmptyObject(value) && !shouldPreserve(options.preserveEmptyObject, 'arrayItem')) {
         delete cleanObj[idx];
-      } else if (isEmptyArray(value) && !options.preserveEmptyArray) {
+      } else if (isEmptyArray(value) && !shouldPreserve(options.preserveEmptyArray, 'arrayItem')) {
         delete cleanObj[idx];
       } else {
         cleanObj[idx] = value;
@@ -128,8 +135,8 @@ export default function removeUndefinedObjects<T>(obj?: T, options?: RemovalOpti
 
   // If the only thing that's leftover is an empty object or empty array then return nothing.
   if (
-    (isEmptyObject(withoutUndefined) && !options?.preserveEmptyObject) ||
-    (isEmptyArray(withoutUndefined) && !options?.preserveEmptyArray)
+    (isEmptyObject(withoutUndefined) && !shouldPreserve(options?.preserveEmptyObject, 'root')) ||
+    (isEmptyArray(withoutUndefined) && !shouldPreserve(options?.preserveEmptyArray, 'root'))
   ) {
     return;
   }
