@@ -71,6 +71,26 @@ console.log(
 // { key1: {}, key2: {}, key3: 123 }
 ```
 
+### `preserveEmptyObjectsInArrays`
+
+Optional boolean.
+Controls whether empty object items inside arrays are removed. If omitted, this follows `preserveEmptyObject`.
+
+```js
+import removeUndefinedObjects from 'remove-undefined-objects';
+
+console.log(removeUndefinedObjects({ key1: [{}, { nested: undefined }, { key: 'value' }] }));
+// { key1: [{ key: 'value' }] }
+
+console.log(
+  removeUndefinedObjects(
+    { key1: [{}, { nested: undefined }, { key: 'value' }], key2: {} },
+    { preserveEmptyObject: true, preserveEmptyObjectsInArrays: false },
+  ),
+);
+// { key1: [{ key: 'value' }], key2: {} }
+```
+
 ### `preserveNullishArrays`
 
 Optional boolean.

@@ -13,8 +13,13 @@ function isEmptyArray(arr: unknown) {
 interface RemovalOptions {
   preserveEmptyArray?: boolean;
   preserveEmptyObject?: boolean;
+  preserveEmptyObjectsInArrays?: boolean;
   preserveNullishArrays?: boolean;
   removeAllFalsy?: boolean;
+}
+
+function shouldPreserveEmptyObjectInArray(options: RemovalOptions) {
+  return options.preserveEmptyObjectsInArrays ?? options.preserveEmptyObject;
 }
 
 // Remove objects that has undefined value or recursively contain undefined values
@@ -89,7 +94,7 @@ function stripEmptyObjects(obj: any, options: RemovalOptions = {}) {
     if (typeof value === 'object' && value !== null) {
       value = stripEmptyObjects(value, options);
 
-      if (isEmptyObject(value) && !options.preserveEmptyObject) {
+      if (isEmptyObject(value) && !shouldPreserveEmptyObjectInArray(options)) {
         delete cleanObj[idx];
       } else if (isEmptyArray(value) && !options.preserveEmptyArray) {
         delete cleanObj[idx];
