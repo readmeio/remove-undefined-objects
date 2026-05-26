@@ -181,6 +181,125 @@ it('should not remove empty object values from arrays when preserveEmptyObject i
   });
 });
 
+it('should preserve empty object values by context', () => {
+  expect(removeUndefinedObjects({}, { preserveEmptyObject: { root: true } })).toStrictEqual({});
+  expect(removeUndefinedObjects({ value: {} }, { preserveEmptyObject: { root: true } })).toStrictEqual({});
+  expect(removeUndefinedObjects({}, { preserveEmptyObject: { objectProperty: true } })).toBeUndefined();
+
+  expect(
+    removeUndefinedObjects(
+      { value: {}, nested: { value: undefined } },
+      { preserveEmptyObject: { objectProperty: true } },
+    ),
+  ).toStrictEqual({ value: {}, nested: {} });
+
+  expect(
+    removeUndefinedObjects(
+      {
+        topLevelEmptyObject: {},
+        nested: {
+          emptyObject: {},
+        },
+        array: [{}, { emptyObject: {} }, { value: 'value' }],
+      },
+      {
+        preserveEmptyObject: {
+          objectProperty: true,
+          root: true,
+        },
+      },
+    ),
+  ).toStrictEqual({
+    topLevelEmptyObject: {},
+    nested: {
+      emptyObject: {},
+    },
+    array: [{ emptyObject: {} }, { value: 'value' }],
+  });
+
+  expect(
+    removeUndefinedObjects(
+      { value: [{}, { a: undefined }] },
+      {
+        preserveEmptyArray: true,
+        preserveEmptyObject: {
+          objectProperty: true,
+          root: true,
+        },
+      },
+    ),
+  ).toStrictEqual({ value: [] });
+
+  expect(
+    removeUndefinedObjects([{}, { a: undefined }, { b: 'b' }], {
+      preserveEmptyObject: { arrayItem: true },
+    }),
+  ).toStrictEqual([{}, {}, { b: 'b' }]);
+});
+
+it('should preserve empty arrays by context', () => {
+  expect(removeUndefinedObjects([], { preserveEmptyArray: { root: true } })).toStrictEqual([]);
+  expect(removeUndefinedObjects({ value: [] }, { preserveEmptyArray: { root: true } })).toBeUndefined();
+  expect(removeUndefinedObjects([], { preserveEmptyArray: { objectProperty: true } })).toBeUndefined();
+
+  expect(
+    removeUndefinedObjects(
+      { value: [], nested: { value: [undefined] } },
+      { preserveEmptyArray: { objectProperty: true } },
+    ),
+  ).toStrictEqual({ value: [], nested: { value: [] } });
+
+  expect(
+    removeUndefinedObjects([[], [undefined], ['value']], {
+      preserveEmptyArray: { arrayItem: true },
+    }),
+  ).toStrictEqual([[], [], ['value']]);
+});
+
+it('should preserve empty objects and arrays by context when both maps are supplied', () => {
+  expect(
+    removeUndefinedObjects(
+      {
+        emptyArrayProperty: [],
+        emptyObjectProperty: {},
+        nested: {
+          emptyArrayProperty: [undefined],
+          emptyObjectProperty: { value: undefined },
+        },
+        array: [
+          {},
+          [],
+          {
+            emptyArrayProperty: [],
+            emptyObjectProperty: {},
+          },
+          ['value'],
+          { value: 'value' },
+        ],
+      },
+      {
+        preserveEmptyArray: { objectProperty: true },
+        preserveEmptyObject: { objectProperty: true },
+      },
+    ),
+  ).toStrictEqual({
+    emptyArrayProperty: [],
+    emptyObjectProperty: {},
+    nested: {
+      emptyArrayProperty: [],
+      emptyObjectProperty: {},
+    },
+    array: [
+      {
+        emptyArrayProperty: [],
+        emptyObjectProperty: {},
+      },
+      ['value'],
+      { value: 'value' },
+    ],
+  });
+});
+
 it('should not remove null values from arrays when preserveArrayNulls is true', () => {
   expect(removeUndefinedObjects([null], { preserveNullishArrays: true })).toStrictEqual([null]);
   expect(removeUndefinedObjects([undefined], { preserveNullishArrays: true })).toBeUndefined();

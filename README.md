@@ -36,8 +36,8 @@ The following items will NOT be removed:
 
 ### `preserveEmptyArray`
 
-Optional boolean.
-If provided, empty arrays `[]` will not get removed
+Optional boolean or context map.
+Controls whether empty arrays will not get removed.
 
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
@@ -54,10 +54,28 @@ console.log(
 // { key1: [], key2: [], nested: { key3: 'a', key4: [] } }
 ```
 
+To preserve empty arrays only in certain locations, provide a context map:
+
+```js
+console.log(removeUndefinedObjects([], { preserveEmptyArray: { root: true } }));
+// []
+
+console.log(
+  removeUndefinedObjects(
+    { key1: [], key2: [undefined], key3: [[], ['value']] },
+    { preserveEmptyArray: { objectProperty: true } },
+  ),
+);
+// { key1: [], key2: [], key3: [['value']] }
+
+console.log(removeUndefinedObjects([[], [undefined], ['value']], { preserveEmptyArray: { arrayItem: true } }));
+// [[], [], ['value']]
+```
+
 ### `preserveEmptyObject`
 
-Optional boolean.
-If provided, empty objects will not be removed.
+Optional boolean or context map.
+Controls whether empty objects will not be removed.
 
 ```js
 import removeUndefinedObjects from 'remove-undefined-objects';
@@ -70,6 +88,35 @@ console.log(
 );
 // { key1: {}, key2: {}, key3: 123 }
 ```
+
+To preserve empty objects only in certain locations, provide a context map:
+
+```js
+console.log(removeUndefinedObjects({}, { preserveEmptyObject: { root: true } }));
+// {}
+
+console.log(removeUndefinedObjects({ key1: [{}, { nested: undefined }, { key: 'value' }] }));
+// { key1: [{ key: 'value' }] }
+
+console.log(
+  removeUndefinedObjects(
+    { key1: [{}, { nested: undefined }, { key: 'value' }], key2: {}, key3: { nested: undefined } },
+    { preserveEmptyObject: { objectProperty: true } },
+  ),
+);
+// { key1: [{ key: 'value' }], key2: {}, key3: {} }
+
+console.log(
+  removeUndefinedObjects([{}, { nested: undefined }, { key: 'value' }], { preserveEmptyObject: { arrayItem: true } }),
+);
+// [{}, {}, { key: 'value' }]
+```
+
+Supported preservation contexts are:
+
+- `root`: the cleaned input value itself.
+- `objectProperty`: a value assigned to an object property.
+- `arrayItem`: a value contained directly in an array.
 
 ### `preserveNullishArrays`
 
